@@ -1,13 +1,12 @@
 package Integration;
+
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
+import io.cucumber.java.After;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.openqa.selenium.By;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.net.MalformedURLException;
 
@@ -24,21 +23,37 @@ public class CreateEvent {
     }
     @When("Select event from list of events")
     public void openEvent () {
-        WebDriverWait wait = new WebDriverWait(driver, 30);
-        MobileElement event = (MobileElement) wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//android.widget.RelativeLayout[@resource-id='eu.parent.android.app:id/container'])[3]")));
+//        WebDriverWait wait = new WebDriverWait(driver, 30);
+//        MobileElement event = (MobileElement) wait.until(ExpectedConditions.visibilityOfElementLocated(
+//                By.xpath("(//android.widget.RelativeLayout[@resource-id='eu.parent.android.app:id/container'])[3]")));
+        MobileElement event = helper.getElementByXpath(driver,"(//android.widget.RelativeLayout[@resource-id='eu.parent.android.app:id/container'])[3]");
         event.click();
     }
-    @Then("Click on calendar icon and click on create event")
+    @And("Click on calendar icon and click on create event")
     public void clickOnCalendar() {
-        WebDriverWait wait = new WebDriverWait(driver, 30);
-        MobileElement calendarIcon = (MobileElement) wait.until(ExpectedConditions.visibilityOfElementLocated((By.id("calendar"))));
-//        Assert.assertTrue(calendarIcon.isDisplayed());
-//        MobileElement calendarIcon = driver.findElement(By.id("calendar"));
+//        WebDriverWait wait = new WebDriverWait(driver, 30);
+//        MobileElement calendarIcon = (MobileElement) wait.until(ExpectedConditions.visibilityOfElementLocated((By.id("calendar"))));
+        MobileElement calendarIcon = helper.getElementById(driver,"calendar");
         calendarIcon.click();
+//        MobileElement addEventButton = driver.findElement(By.id("add_button"));
+        MobileElement addEventButton = helper.getElementById(driver,"add_button");
+        addEventButton.click();
+//        MobileElement createEventButton = (MobileElement) wait.until(ExpectedConditions.visibilityOfElementLocated(
+//                By.xpath("//android.widget.TextView[@resource-id='eu.parent.android.app:id/label' and @text='Create event']")));
+        MobileElement createEventButton = helper.getElementByXpath(driver,"//android.widget.TextView[@resource-id='eu.parent.android.app:id/label' and @text='Create event']");
+        createEventButton.click();
     }
-    //eu.parent.android.app:id/add_button
-    //new UiSelector().text("Create event")
-    ////android.widget.TextView[@resource-id="eu.parent.android.app:id/label" and @text="Create event"]
 
+    @And("Fill all required fields")
+    public void fillCreationFields() {
 
+    }
+
+    @Then("Event will be created successfully")
+    public void eventWillBeCreatedSuccessfully() {
+    }
+    @After
+    public void closeWindow(){
+        driver.quit();
+    }
 }

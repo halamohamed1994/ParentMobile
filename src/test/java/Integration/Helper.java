@@ -30,4 +30,12 @@ public class Helper {
         MobileElement login_button = driver.findElement(By.id("login_button"));
         login_button.click();
     }
+    public MobileElement getElementById(AndroidDriver<MobileElement> driver , String elementName){
+        WebDriverWait wait = new WebDriverWait(driver, 30);
+        return  (MobileElement) wait.until(ExpectedConditions.visibilityOfElementLocated((By.id(elementName))));
+    }
+    public MobileElement getElementByXpath(AndroidDriver<MobileElement> driver , String elementName){
+        WebDriverWait wait = new WebDriverWait(driver, 30);
+        return  (MobileElement)wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(elementName)));
+    }
 }
