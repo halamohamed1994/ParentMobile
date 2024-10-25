@@ -2,7 +2,6 @@ package Integration;
 
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.remote.MobileCapabilityType;
 import io.cucumber.java.After;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -10,42 +9,22 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.net.URL;
+import java.net.MalformedURLException;
 
 public class ViewEventDetails {
     AndroidDriver<MobileElement> driver ;
-
-
+    Helper helper = new Helper();
     @Given("ParentAps app is launched")
-    public void launchParentApp(){
-        try {
-            DesiredCapabilities capabilities = new DesiredCapabilities();
-            capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
-            capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "Galaxy A02");
-            capabilities.setCapability("appPackage", "eu.parent.android.app");
-            capabilities.setCapability("appActivity", "eu.parent.android.app.DispatchActivity");
-            capabilities.setCapability("automationName", "UIAutomator2");
-            driver = new AndroidDriver<>(new URL("http://localhost:4723/wd/hub"), capabilities);
-
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
-
+    public void launchParentApp() throws MalformedURLException {
+        driver = helper.launchApp();
     }
 
     @And("login with user credentials username {string} , password {string}")
     public void loginWithUserCredentials(String username, String password) {
-        WebDriverWait wait = new WebDriverWait(driver, 30);
-        MobileElement emailField = (MobileElement) wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("email_edit_text")));
-        emailField.sendKeys("democompany@parent.eu");
-        MobileElement passwordField = (MobileElement) wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password_edit_text")));
-        passwordField.sendKeys("P@rent12345678");
-        MobileElement login_button = driver.findElement(By.id("login_button"));
-        login_button.click();
+        helper.login(username,password,driver);
     }
 
     @When("Open event from list of events")

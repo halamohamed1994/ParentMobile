@@ -7,7 +7,7 @@ import org.junit.runner.RunWith;
 @RunWith(Cucumber.class)
 @CucumberOptions(
         stepNotifications = true,
-        features = {"src/test/resources/features/ViewEventDetails.feature"},
+        features = {"src/test/resources/features/CreateEvent.feature"},
         plugin = {"pretty", "html:target/cucumber-reports"})
 
 public class Runner {
