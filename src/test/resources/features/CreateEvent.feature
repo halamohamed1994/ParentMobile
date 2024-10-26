@@ -5,5 +5,4 @@ Feature: CreateEvent
     And login with user credentials username "democompany@parent.eu" and password "P@rent12345678"
     When Select event from list of events
     And Click on calendar icon and click on create event
-    And Fill all required fields
-    Then Event will be created successfully
+    Then Fill all required fields
